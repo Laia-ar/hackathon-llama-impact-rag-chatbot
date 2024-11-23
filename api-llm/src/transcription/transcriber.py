@@ -2,12 +2,9 @@ import io
 from typing import List
 from openai import OpenAI
 from pydub import AudioSegment
-import requests
-from ..config import Config
+import whisper
 
 class Transcriber:
-    def __init__(self):
-        self.client = OpenAI(api_key=Config.OPENAI_API_KEY)
 
     def transcribe_chunks(self, audio_chunks: List[AudioSegment]) -> str:
         """Transcribe una lista de chunks de audio."""
@@ -23,10 +20,6 @@ class Transcriber:
             chunk.export(wav_file, format="wav")
             wav_file.seek(0)
             wav_file.name = "audio.wav"
-            transcript = requests.post(
-                 "https://api.aimlapi.com/stt",
-                 headers={"Content-Type":"application/json"},
-                 json={"model":"text"}
-                       )
-            transcript = transcript.json()
+            model = whisper.load_model("tiny")
+            transcript = model.transcribe(wav_file)["text"]
         return transcript.text

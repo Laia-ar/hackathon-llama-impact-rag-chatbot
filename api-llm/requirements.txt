@@ -1,0 +1,4 @@
+pydub
+webrtcvad
+requests
+whisper
