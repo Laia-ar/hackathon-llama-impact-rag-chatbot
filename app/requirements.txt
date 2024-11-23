@@ -4,3 +4,4 @@ pydub==0.25.1
 webrtcvad
 openai
 requests
+openai-whisper
