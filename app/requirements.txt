@@ -5,3 +5,5 @@ webrtcvad
 openai
 requests
 openai-whisper
+tiktoken
+pinecone
