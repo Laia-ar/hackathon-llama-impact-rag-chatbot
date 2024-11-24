@@ -1,0 +1,397 @@
+[
+    {
+        "name": "Uretritis Gonocócica",
+        "symptoms": [
+            "descarga uretral mucopurulenta",
+            "prurito",
+            "dolor miccional",
+            "ardor miccional"
+        ],
+        "risk_factors": [
+            "sexo masculino",
+            "edad entre 15-45 años",
+            "múltiples parejas sexuales",
+            "inicio temprano de relaciones sexuales",
+            "bajo nivel socioeconómico",
+            "uso de DIU"
+        ],
+        "characteristics": {
+            "periodo_incubacion": "2-5 días",
+            "agente_causal": "Neisseria gonorrhoeae"
+        },
+        "treatment": "Ceftriaxona 500 mg IM dosis única + Azitromicina 1 g VO dosis única"
+    },
+    {
+        "name": "Uretritis No Gonocócica por Chlamydia trachomatis",
+        "symptoms": [
+            "sintomatología escasa o asintomática"
+        ],
+        "risk_factors": [],
+        "characteristics": {
+            "periodo_incubacion": "7-14 días",
+            "agente_causal": "Chlamydia trachomatis"
+        },
+        "treatment": "Doxiciclina 100 mg cada 12 hs por 7 días + Azitromicina 500 mg el 1° día, luego 250 mg (2° a 5° día)"
+    },
+    {
+        "name": "Uretritis No Gonocócica por Mycoplasma genitalium",
+        "symptoms": [
+            "uretritis recurrente o persistente",
+            "balanitis",
+            "balanopostitis"
+        ],
+        "risk_factors": [],
+        "characteristics": {
+            "agente_causal": "Mycoplasma genitalium"
+        },
+        "treatment": "Azitromicina 500 mg el 1° día, luego 250 mg (2° a 5° día), o Moxifloxacina 400 mg cada 24 hs por 7-14 días si hay resistencia"
+    },
+    {
+        "name": "Uretritis No Gonocócica por Ureaplasma urealyticum",
+        "symptoms": [
+            "sintomatología variable",
+            "frecuente colonización asintomática"
+        ],
+        "risk_factors": [],
+        "characteristics": {
+            "agente_causal": "Ureaplasma urealyticum"
+        },
+        "treatment": "Doxiciclina 100 mg cada 12 hs por 7 días + Azitromicina 500 mg el 1° día, luego 250 mg (2° a 5° día)"
+    },
+    {
+        "name": "Uretritis por Trichomonas vaginalis",
+        "symptoms": [
+            "secreción uretral escasa",
+            "colpitis",
+            "vulvovaginitis con exudado vaginal",
+            "dispareunia",
+            "respuesta inflamatoria intensa en mujeres"
+        ],
+        "risk_factors": [],
+        "characteristics": {
+            "agente_causal": "Trichomonas vaginalis"
+        },
+        "treatment": "Metronidazol 2 g VO dosis única"
+    },
+    {
+        "name": "Uretritis por Herpes Simple",
+        "symptoms": [
+            "lesiones genitales ulceradas dolorosas",
+            "disuria intensa",
+            "linfadenopatías regionales",
+            "afectación del estado general"
+        ],
+        "risk_factors": [],
+        "characteristics": {
+            "agente_causal": "Virus del Herpes Simple"
+        },
+        "treatment": "Tratamiento sintomático (según indicación médica)"
+    },
+        {
+            "name": "Epididimitis bacteriana inespecífica",
+            "symptoms": [
+                "dolor e inflamación del epidídimo",
+                "compromiso escrotal",
+                "posibilidad de hidrocele"
+            ],
+            "risk_factors": [
+                "manipulación del aparato genitourinario",
+                "prostatitis bacteriana aguda o crónica",
+                "bacteriuria secundaria a obstrucción vesical"
+            ],
+            "characteristics": {
+                "etiologia": [
+                    "bacilos coliformes",
+                    "Pseudomonas aeruginosa",
+                    "cocos Gram positivos"
+                ],
+                "complicaciones": [
+                    "infarto testicular",
+                    "absceso escrotal",
+                    "epididimitis crónica",
+                    "esterilidad"
+                ]
+            },
+            "treatment": "Levofloxacina 500 mg VO una vez al día por 10 días"
+        },
+        {
+            "name": "Epididimitis de transmisión sexual",
+            "symptoms": [
+                "dolor e inflamación del epidídimo",
+                "síntomas asociados a ITS (uretritis, secreción escasa)"
+            ],
+            "risk_factors": [
+                "contacto sexual reciente",
+                "jóvenes sexualmente activos entre 14-35 años"
+            ],
+            "characteristics": {
+                "etiologia": [
+                    "Chlamydia trachomatis",
+                    "Neisseria gonorrhoeae"
+                ],
+                "periodo_incubacion": "1 a 45 días (media de 10 días)"
+            },
+            "treatment": "Ceftriaxona 500 mg IM dosis única + Azitromicina 1 g VO dosis única"
+        },
+        {
+            "name": "Epididimitis asociada a organismos entéricos",
+            "symptoms": [
+                "dolor e inflamación del epidídimo",
+                "compromiso escrotal",
+                "síntomas relacionados con bacterias entéricas"
+            ],
+            "risk_factors": [
+                "sexo anal",
+                "biopsia de próstata",
+                "vasectomía",
+                "instrumentación del tracto urinario"
+            ],
+            "characteristics": {
+                "etiologia": [
+                    "Escherichia coli",
+                    "Klebsiella pneumoniae",
+                    "Proteus mirabilis",
+                    "Haemophilus influenzae"
+                ]
+            },
+            "treatment": "Ceftriaxona 500 mg IM dosis única + Levofloxacina 500 mg VO una vez al día por 10 días"
+        },
+        {
+            "name": "Orquitis viral",
+            "symptoms": [
+                "dolor e inflamación testicular",
+                "atrofia testicular en algunos casos",
+                "síntomas asociados con infecciones virales"
+            ],
+            "risk_factors": [
+                "virus de la parotiditis",
+                "pospuberales (20% de casos)"
+            ],
+            "characteristics": {
+                "etiologia": [
+                    "virus de la parotiditis",
+                    "enterovirus",
+                    "adenovirus"
+                ],
+                "duracion": "4-6 días (leve) a 3-4 semanas (grave)"
+            },
+            "treatment": "Tratamiento sintomático (reposo, antiinflamatorios, crioterapia local)"
+        },
+        {
+            "name": "Orquitis bacteriana",
+            "symptoms": [
+                "dolor testicular intenso",
+                "fiebre alta",
+                "gran afectación testicular"
+            ],
+            "risk_factors": [
+                "extensión de epididimitis bacteriana",
+                "proceso inflamatorio del epidídimo"
+            ],
+            "characteristics": {
+                "etiologia": [
+                    "Pseudomonas aeruginosa",
+                    "Escherichia coli",
+                    "Klebsiella pneumoniae",
+                    "estafilococos",
+                    "estreptococos"
+                ]
+            },
+            "treatment": "Tratamiento antibiótico y medidas complementarias (reposo, crioterapia, antiinflamatorios)"
+        },
+        {
+            "name": "Epididimitis tuberculosa",
+            "symptoms": [
+                "dolor crónico en escroto, testículos o epidídimo",
+                "dificultad para aislar el bacilo"
+            ],
+            "risk_factors": [
+                "antecedentes de tuberculosis",
+                "pacientes prostáticos"
+            ],
+            "characteristics": {
+                "etiologia": "Mycobacterium tuberculosis"
+            },
+            "treatment": "Tratamiento específico para tuberculosis"
+        },
+        {
+            "name": "Proctitis infecciosa",
+            "symptoms": [
+                "dolor ano-rectal",
+                "tenesmo",
+                "secreción rectal"
+            ],
+            "risk_factors": [
+                "relaciones anales receptivas no protegidas",
+                "uso de saliva como lubricante en relaciones anales"
+            ],
+            "characteristics": {
+                "etiologia": [
+                    "Neisseria gonorrhoeae",
+                    "Chlamydia trachomatis (incluida la serovariedad LGV)",
+                    "Treponema pallidum",
+                    "Herpes Simplex Virus (HSV)",
+                    "Mycoplasma genitalium (infrecuente)"
+                ],
+                "diagnostico": {
+                    "observacion_microscopica": "presencia de polimorfonucleares",
+                    "tincion_gram": "visualización de gonococos",
+                    "pruebas_complementarias": [
+                        "cultivo o TAAN para N. gonorrhoeae",
+                        "cultivo o TAAN para HSV",
+                        "TAAN para C. trachomatis",
+                        "pruebas serológicas y fondo oscuro para T. pallidum"
+                    ]
+                }
+            },
+            "treatment": "Antimicrobianos específicos según el agente etiológico; en casos de N. gonorrhoeae, ceftriaxona 500 mg y azitromicina en terapia combinada"
+        },
+        {
+            "name": "Candidiasis Vulvovaginal",
+            "symptoms": [
+                "prurito vulvar",
+                "dolor o quemazón",
+                "descarga vaginal blanca, grumosa, adherente",
+                "eritema y edema vulvar y de la mucosa vaginal",
+                "excoriaciones y fisuras vulvares",
+                "disuria",
+                "dispareunia",
+                "depresión y ansiedad en casos recurrentes"
+            ],
+            "risk_factors": [
+                "diabetes mellitus",
+                "uso de antibióticos de amplio espectro",
+                "aumento de los niveles de estrógeno (embarazo y terapia hormonal)",
+                "inmunosupresión",
+                "uso de anticonceptivos no hormonales (como esponjas vaginales, diafragmas y dispositivos intrauterinos)",
+                "estrés",
+                "sexos orogenital y anogenital"
+            ],
+            "characteristics": {
+                "etiologia": "Candida spp., principalmente *Candida albicans*",
+                "prevalencia": "10-20% de mujeres sanas en edad fértil; 29-49% han tenido al menos un episodio",
+                "especies comunes": "*Candida albicans* (80-92%), *Candida glabrata* (resto), *Candida krusei*, *Candida tropicalis* y otras"
+            },
+            "treatment": {
+                "non_complicated": [
+                    "Clotrimazol 1% (crema vaginal) 5 gr 1 vez al día durante 7-14 días",
+                    "Fluconazol 150 mg monodosis (oral)"
+                ],
+                "recurrent": [
+                    "Fluconazol 150 mg cada 72 horas por 3 dosis, seguido de fluconazol 150 mg semanal durante 6 meses",
+                    "Alternativas tópicas como clotrimazol, miconazol o terconazol",
+                    "Ácido bórico (en caso de resistencia a azoles)"
+                ],
+                "resistance_cases": [
+                    "Ácido bórico 600 mg cápsulas vaginales 1 vez al día durante 14 días",
+                    "Nistatina 100,000 unidades 1 vez al día durante 14 días",
+                    "Anfotericina B y flucitosina en casos graves"
+                ]
+            }
+        },
+        {
+            "name": "Vaginosis Bacteriana (VB)",
+            "description": "Es una disbiosis de la microbiota vaginal que se presenta comúnmente en mujeres en edad reproductiva. Se asocia a flujo vaginal anormal y otros síntomas vulvovaginales, aunque muchas veces es asintomática.",
+            "symptoms": [
+                "flujo vaginal con mal olor (olor a pescado)",
+                "prurito vulvar",
+                "disuria",
+                "eritema o ardor vulvar",
+                "dispareunia",
+                "sinusorragia",
+                "menstruaciones fétidas",
+                "mal olor postcoital"
+            ],
+            "risk_factors": [
+                "mujeres en edad reproductiva",
+                "raza negra",
+                "tabaquismo",
+                "uso de dispositivo intrauterino (DIU)",
+                "ducha vaginal",
+                "cunnilingus",
+                "cambio de pareja sexual",
+                "mujeres que tienen sexo con mujeres"
+            ],
+            "characteristics": {
+                "etiology": "Polimicrobiana, con predominancia de Gardnerella vaginalis, Anaerobios, Móbiluncus, Mycoplasma spp. y otras bacterias como Atopobium vaginae, Eggerthella, Megasphera, Leptotrichia, Bifidumbacteria, Slackia, Arthrobacter.",
+                "pathogenesis": "Aún no completamente comprendida, relacionada con un desplazamiento de lactobacilos y aumento del pH vaginal."
+            },
+            "clinical_implications": [
+                "riesgo de complicaciones obstétricas como abortos, partos prematuros, rotura prematura de membranas, corioamnionitis, infecciones puerperales y postcesáreas",
+                "asociación con enfermedades pélvicas inflamatorias (EPI)",
+                "aumento en la transmisión del HIV",
+                "relación con alteraciones en la oncogénesis cervical"
+            ],
+            "diagnosis": {
+                "methods": [
+                    "criterios de Amsel: flujo homogéneo, pH > 4.5, prueba de aminas positiva, presencia de 'Clue Cells'",
+                    "criterios de Nugent",
+                    "cultivo vaginal (aunque no es necesario para el diagnóstico)",
+                    "medición del pH vaginal y prueba de aminas"
+                ],
+                "gold_standard": "Criterios de Nugent"
+            },
+            "treatment": {
+                "recommended": [
+                    {
+                        "medication": "metronidazol",
+                        "dose": "500 mg cada 12 horas",
+                        "route": "oral",
+                        "duration": "7 días"
+                    },
+                    {
+                        "medication": "metronidazol",
+                        "dose": "0.75% gel",
+                        "route": "vaginal",
+                        "duration": "5 días"
+                    },
+                    {
+                        "medication": "clindamicina",
+                        "dose": "2% crema vaginal",
+                        "route": "vaginal",
+                        "duration": "7 días"
+                    },
+                    {
+                        "medication": "clindamicina",
+                        "dose": "300 mg cada 12 horas",
+                        "route": "oral",
+                        "duration": "7 días"
+                    },
+                    {
+                        "medication": "tinidazol",
+                        "dose": "2g",
+                        "route": "oral",
+                        "duration": "3 días"
+                    }
+                ],
+                "alternatives": [
+                    {
+                        "medication": "clindamicina",
+                        "dose": "100 mg (óvulos)",
+                        "route": "vaginal",
+                        "duration": "3 días"
+                    },
+                    {
+                        "medication": "tinidazol",
+                        "dose": "1g",
+                        "route": "oral",
+                        "duration": "5 días"
+                    }
+                ],
+                "considerations": [
+                    "efectos adversos",
+                    "preferencia de la paciente (sistémico o local)",
+                    "cumplimiento del tratamiento",
+                    "embarazo actual"
+                ]
+            },
+            "recurrence": {
+                "rate": "alta frecuencia de recurrencia, cerca del 30% a los 3 meses y 80% a los 9 meses",
+                "causes": "recaída vaginal más que reinfección verdadera",
+                "follow_up": "control clínico 1 mes después del tratamiento para verificar curación clínica y microbiológica"
+            }
+        }
+        
+                
+]
+    
