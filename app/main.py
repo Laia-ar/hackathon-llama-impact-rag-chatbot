@@ -2,8 +2,8 @@ import streamlit as st
 from get_random_answer import query_llm
 from audiorecorder import audiorecorder
 from pydub import AudioSegment
-import io
 import whisper
+import tempfile
 
 st.set_page_config(page_title="Chatbot", layout="centered")
 st.title("Chatbot with RAG")
@@ -28,6 +28,7 @@ def process_audio(filename, model_type):
 audio = audiorecorder("Grabar audio", "Detener")
 if len(audio) > 0:
     try:
+        st.write(f"Uploaded file name: {audio.name}, type: {audio.type}")
         if isinstance(audio, AudioSegment):
             # AudioSegment a bytes
             st.audio(audio.export().read())  
@@ -42,6 +43,21 @@ if len(audio) > 0:
             st.error("Formato de audio no compatible.")
     except Exception as e:
         st.error(f"Error al procesar el audio: {e}")
+
+# Subida de audio WAV para la transcripcion
+uploaded_file = st.file_uploader("Subí un archivo WAV", type=["wav"])
+try:
+    if uploaded_file is not None:
+        with tempfile.NamedTemporaryFile(delete=True, suffix=".wav") as temp_file:
+            temp_file.write(uploaded_file.getbuffer())
+            temp_file_path = temp_file.name 
+
+        transcribed_text = process_audio(temp_file_path, whisper_model_type.lower())
+
+        st.session_state["chat_history"].append({"role": "user", "content": transcribed_text})
+except Exception as e:
+    st.write(str(e))
+
 
 if st.button("Enviar"):
     if user_input:
