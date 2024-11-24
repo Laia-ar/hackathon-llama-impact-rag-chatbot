@@ -8,3 +8,4 @@ openai-whisper
 tiktoken
 pinecone
 PyPDF2
+python-docx
