@@ -1,4 +1,8 @@
-pydub
-webrtcvad
 requests
-whisper
+fastapi 
+uvicorn 
+python-dotenv 
+openai 
+nltk 
+scikit-learn 
+pydantic
