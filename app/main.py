@@ -48,7 +48,7 @@ if len(audio) > 0:
 uploaded_file = st.file_uploader("Subí un archivo WAV", type=["wav"])
 try:
     if uploaded_file is not None:
-        with tempfile.NamedTemporaryFile(delete=True, suffix=".wav") as temp_file:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_file:
             temp_file.write(uploaded_file.getbuffer())
             temp_file_path = temp_file.name 
 
