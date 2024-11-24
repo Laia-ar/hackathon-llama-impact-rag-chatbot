@@ -5,3 +5,7 @@ webrtcvad
 openai
 requests
 openai-whisper
+tiktoken
+pinecone
+PyPDF2
+python-docx
