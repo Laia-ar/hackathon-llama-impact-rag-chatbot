@@ -29,7 +29,6 @@ TRANSLATIONS = {
         'no_docs_warning': "No documents found. Please upload some documents first.",
         'select_docs_prompt': "Select documents to search (leave empty to search all)",
         'enter_question': "Enter your question:",
-        'audio_section': "Audio",
         'record_audio': "Record audio",
         'stop_recording': "Stop recording",
         'upload_wav': "Upload a WAV file",
@@ -54,7 +53,6 @@ TRANSLATIONS = {
         'no_docs_warning': "No se encontraron documentos. Por favor, suba algunos documentos primero.",
         'select_docs_prompt': "Seleccione documentos para buscar (dejar vacío para buscar en todos)",
         'enter_question': "Ingrese su pregunta:",
-        'audio_section': "Audio",
         'record_audio': "Grabar audio",
         'stop_recording': "Detener grabación",
         'upload_wav': "Subir archivo WAV",
@@ -477,7 +475,6 @@ def main():
     with tab1:
         st.title(t['ask_questions'])
         st.text(t['query_subtitle'])
-        st.subheader(t['audio_section'])
         
         documents = st.session_state.vector_store.get_all_documents()
         
