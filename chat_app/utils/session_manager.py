@@ -47,3 +47,9 @@ class ChatSessionManager:
             }
         st.session_state.current_patient = patient_name
         st.session_state.chat_history = []
+
+    @staticmethod
+    def add_patient(patient_name):
+        if "patients" not in st.session_state:
+            st.session_state["patients"] = []
+        st.session_state["patients"].append(patient_name)

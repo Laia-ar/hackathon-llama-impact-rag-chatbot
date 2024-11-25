@@ -1,0 +1,10 @@
+requests>=2.31.0
+python-dotenv>=1.0.0 
+streamlit==1.40.1
+streamlit-audiorecorder==0.0.6
+pydub==0.25.1
+webrtcvad
+openai
+requests
+openai-whisper
+streamlit-extras==0.5.0
