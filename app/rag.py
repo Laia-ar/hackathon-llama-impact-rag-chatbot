@@ -366,9 +366,9 @@ def main():
             st.error("Please check your secrets.toml configuration")
             return
     
-    tab1, tab2 = st.tabs(["Upload Documents", "Query Documents"])
+    tab1, tab2 = st.tabs(["Query Documents", "Download Documents"])
     
-    with tab1:
+    with tab2:
         corpus_folder = "../api-llm/corpus"
 
         files = os.listdir(corpus_folder)
@@ -395,7 +395,7 @@ def main():
                     except Exception as e:
                         st.error(f"Error reading {file_name}: {str(e)}")
     
-    with tab2:
+    with tab1:
         st.title("Ask Questions")
         st.text("to query our curated knowdledge base.")
         st.subheader("Text")
