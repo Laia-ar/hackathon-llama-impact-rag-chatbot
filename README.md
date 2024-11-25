@@ -6,9 +6,10 @@
 
 ### 🛠️ 1. Clone the Repository
 <code>git clone git@github.com:Laia-ar/hackathon-llama-impact-rag-chatbot.git</code> </br>
-<code>cd hackathon-llama-impact-rag-chatbot</code>
+<code>cd hackathon-llama-impact-rag-chatbot</code> </br>
+<code>cd app</code>
 
-### 🔑 2. Set Up API Keys: Create the .streamlit/secrets.toml in the root of the project and add your openai and pinecone API keys in the following format:
+### 🔑 2. Set Up API Keys: Create the .streamlit/secrets.toml and add your openai and pinecone API keys in the following format:
 <code>[openai]</code> </br>
 <code>api_key = "your_openai_api_key"</code> </br>
 <code>base_url = "base_url"</code>
@@ -18,7 +19,6 @@
 <code>index_name = "your_index_name"</code>
 
 ### 📦 3.Install Dependencies
-<code>cd app</code> </br>
 <code>pip install -r requirements.txt</code>
 
 ### 🚀 4.Run the Application:
