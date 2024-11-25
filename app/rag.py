@@ -353,7 +353,7 @@ class VectorStore:
             return []
 
 def main():
-    st.title("Document Q&A System")
+    st.title("Rural Llama Health")
     
     if 'initialized' not in st.session_state:
         try:
@@ -460,7 +460,9 @@ def main():
             st.rerun()
     
     with tab2:
-        st.subheader("Ask Questions")
+        st.title("Ask Questions")
+        st.text("to query our curated knowdledge base.")
+        st.subheader("Text")
         
         documents = st.session_state.vector_store.get_all_documents()
         
@@ -477,7 +479,7 @@ def main():
         query = st.text_input("Enter your question:")
 
         # Which Whisper model
-        whisper_model_type = st.radio("Please choose your model type", ('Tiny', 'Base', 'Small', 'Medium', 'Large'))
+        whisper_model_type = "Small"
 
         def process_audio(filename, model_type):
             model = whisper.load_model(model_type)
@@ -525,7 +527,7 @@ def main():
                 if results:
                     context = "\n\n".join([match.metadata['text'] for match in results])
                     messages = [
-                        {"role": "system", "content": "You are a helpful assistant. Answer the question based on the provided context. If you cannot find the answer in the context, say so. Include citations to source documents where possible."},
+                        {"role": "system", "content": "Eres un asistente de un profesional médico. Responde a la pregunta basándote en el contexto proporcionado. Si no puedes encontrar la respuesta en el contexto, indícalo. Incluye citas de los documentos fuente cuando sea posible."},
                         {"role": "user", "content": f"Context:\n{context}\n\nQuestion: {query}"}
                     ]
                     
