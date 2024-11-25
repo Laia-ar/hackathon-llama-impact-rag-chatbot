@@ -369,95 +369,31 @@ def main():
     tab1, tab2 = st.tabs(["Upload Documents", "Query Documents"])
     
     with tab1:
-        st.info("System optimized for medium-sized documents with token limiting")
+        corpus_folder = "../api-llm/corpus"
+
+        files = os.listdir(corpus_folder)
+        files = [f for f in files if f.endswith(".pdf")]
         
-        # Document management section
-        st.subheader("Manage Documents")
-        documents = st.session_state.vector_store.get_all_documents()
-        
-        if documents:
-            st.write("Currently uploaded documents:")
-            for doc_name, metadata in documents.items():
-                col1, col2, col3 = st.columns([3, 2, 1])
+        if files:
+            st.subheader("Available Documents")
+            for file_name in files:
+                col1, col2 = st.columns([4, 1])
                 with col1:
-                    st.write(f"📄 {doc_name}")
+                    st.write(f"📄 {file_name}")  # Display the file name
                 with col2:
-                    upload_time = datetime.fromisoformat(metadata['upload_time'])
-                    st.write(f"Uploaded: {upload_time.strftime('%Y-%m-%d %H:%M')}")
-                with col3:
-                    if st.button("Delete", key=f"del_{doc_name}"):
-                        if st.session_state.vector_store.delete_document(doc_name):
-                            st.success(f"Deleted {doc_name}")
-                            st.rerun()
-        
-        # File upload section
-        st.subheader("Upload New Documents")
-        uploaded_files = st.file_uploader(
-            "Upload documents (Supported formats: PDF, DOCX, TXT)", 
-            accept_multiple_files=True
-        )
-        
-        if uploaded_files:
-            col1, col2 = st.columns(2)
-            with col1:
-                chunk_size = st.number_input("Chunk Size (characters)", 
-                                           min_value=1000, 
-                                           max_value=3000, 
-                                           value=2000)
-            with col2:
-                overlap_size = st.number_input("Overlap Size (characters)", 
-                                             min_value=100, 
-                                             max_value=400, 
-                                             value=200)
-        
-        if uploaded_files and st.button("Process Documents"):
-            total_files = len(uploaded_files)
-            
-            processing_status = st.empty()
-            overall_progress = st.progress(0)
-            
-            for file_idx, file in enumerate(uploaded_files):
-                try:
-                    processing_status.write(f"Processing file {file_idx + 1} of {total_files}: {file.name}")
-                    
-                    read_progress = st.progress(0)
-                    chunk_progress = st.progress(0)
-                    embed_progress = st.progress(0)
-                    
-                    read_progress.progress(0.5)
-                    content, filename = st.session_state.doc_processor.read_file_in_chunks(file)
-                    read_progress.progress(1.0)
-                    
-                    chunk_progress.progress(0.5)
-                    chunks = st.session_state.doc_processor.chunk_text(
-                        content, 
-                        chunk_size=chunk_size, 
-                        overlap=overlap_size
-                    )
-                    chunk_progress.progress(1.0)
-                    
-                    processing_status.write(f"Processing {len(chunks)} chunks for {filename}...")
-                    st.session_state.vector_store.upload_chunks(
-                        chunks, 
-                        filename, 
-                        progress_bar=embed_progress
-                    )
-                    
-                    st.success(f"Successfully processed {filename}")
-                    
-                    overall_progress.progress((file_idx + 1) / total_files)
-                    
-                    del content
-                    del chunks
-                    gc.collect()
-                    
-                except Exception as e:
-                    st.error(f"Error processing {file.name}: {str(e)}")
-                    continue
-            
-            processing_status.write("All documents processed!")
-            st.session_state.documents_processed = True
-            st.rerun()
+                    file_path = os.path.join(corpus_folder, file_name)  # Construct file path
+                    try:
+                        with open(file_path, "rb") as file:
+                            file_data = file.read()  # Read the file as binary
+                        st.download_button(
+                            label="Download",
+                            data=file_data,
+                            file_name=file_name,
+                            mime="application/pdf",  # MIME type for PDFs
+                            key=f"download_{file_name}"  # Unique key for each button
+                        )
+                    except Exception as e:
+                        st.error(f"Error reading {file_name}: {str(e)}")
     
     with tab2:
         st.subheader("Ask Questions")
