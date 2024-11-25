@@ -450,7 +450,7 @@ def main():
     tab1, tab2 = st.tabs([t['query_tab'], t['download_tab']])
     
     with tab2:
-        corpus_folder = "corpus"
+        corpus_folder = os.path.join(os.path.dirname(__file__), "corpus")        
         files = [f for f in os.listdir(corpus_folder) if f.endswith(".pdf")]
         
         if files:
