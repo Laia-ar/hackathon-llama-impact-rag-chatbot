@@ -17,6 +17,60 @@ from pydub import AudioSegment
 import whisper
 import tempfile
 
+# Translations dictionary
+TRANSLATIONS = {
+    'en': {
+        'app_title': "Rural Llama Health",
+        'query_tab': "Query Documents",
+        'download_tab': "Download Documents",
+        'ask_questions': "Ask Questions",
+        'query_subtitle': "to query our curated knowledge base.",
+        'available_docs': "Available Documents",
+        'no_docs_warning': "No documents found. Please upload some documents first.",
+        'select_docs_prompt': "Select documents to search (leave empty to search all)",
+        'enter_question': "Enter your question:",
+        'audio_section': "Audio",
+        'record_audio': "Record audio",
+        'stop_recording': "Stop recording",
+        'upload_wav': "Upload a WAV file",
+        'searching': "Searching for relevant information...",
+        'no_results': "No relevant information found. Please try a different question.",
+        'answer_prefix': "Answer:",
+        'sources_header': "Sources",
+        'source_prefix': "Source",
+        'relevance_score': "Relevance Score:",
+        'error_init': "Error initializing the system:",
+        'error_config': "Please check your secrets.toml configuration",
+        'error_process_audio': "Error processing audio:",
+        'language_selector': "Select Language / Seleccionar Idioma"
+    },
+    'es': {
+        'app_title': "Rural Llama Health",
+        'query_tab': "Consultar Documentos",
+        'download_tab': "Descargar Documentos",
+        'ask_questions': "Hacer Preguntas",
+        'query_subtitle': "para consultar nuestra base de conocimientos.",
+        'available_docs': "Documentos Disponibles",
+        'no_docs_warning': "No se encontraron documentos. Por favor, suba algunos documentos primero.",
+        'select_docs_prompt': "Seleccione documentos para buscar (dejar vacío para buscar en todos)",
+        'enter_question': "Ingrese su pregunta:",
+        'audio_section': "Audio",
+        'record_audio': "Grabar audio",
+        'stop_recording': "Detener grabación",
+        'upload_wav': "Subir archivo WAV",
+        'searching': "Buscando información relevante...",
+        'no_results': "No se encontró información relevante. Por favor, intente con una pregunta diferente.",
+        'answer_prefix': "Respuesta:",
+        'sources_header': "Fuentes",
+        'source_prefix': "Fuente",
+        'relevance_score': "Puntuación de Relevancia:",
+        'error_init': "Error al inicializar el sistema:",
+        'error_config': "Por favor, verifique su configuración en secrets.toml",
+        'error_process_audio': "Error al procesar el audio:",
+        'language_selector': "Select Language / Seleccionar Idioma"
+    }
+}
+
 # Initialize OpenAI client with API key and base_url from secrets
 client = OpenAI(api_key=st.secrets["openai"]["api_key"], base_url=st.secrets["openai"]["base_url"])
 
@@ -285,26 +339,31 @@ class VectorStore:
     def get_all_documents(self) -> Dict[str, Dict]:
         """Get list of all uploaded documents with metadata"""
         try:
+            # Create a dummy vector of zeros for querying
+            dummy_vector = [0.0] * 1536
+            
+            # Query with a large top_k to get all documents
             results = self.index.query(
-                vector=[0] * 1536,
-                top_k=10000,
+                vector=dummy_vector,
+                top_k=10000,  # Adjust this number based on your needs
                 include_metadata=True
             )
             
+            # Process results into a dictionary of unique documents
             documents = {}
             for match in results.matches:
                 source = match.metadata.get('source')
                 if source and source not in documents:
                     documents[source] = {
-                        'upload_time': match.metadata.get('upload_time', datetime.now().isoformat()),
-                        'total_chunks': match.metadata.get('total_chunks', 0)
+                        'upload_time': match.metadata.get('upload_time', ''),
+                        'chunk_index': match.metadata.get('chunk_index', 0)
                     }
             
             return documents
         except Exception as e:
             st.error(f"Error fetching documents: {str(e)}")
             return {}
-    
+
     def delete_document(self, document_name: str):
         """Delete all vectors associated with a document"""
         try:
@@ -352,8 +411,30 @@ class VectorStore:
             st.error(f"Search error: {str(e)}")
             return []
 
+def get_system_prompt(lang: str) -> str:
+    prompts = {
+        'en': "You are a medical professional's assistant. Answer the question based on the provided context. If you cannot find the answer in the context, indicate this. Include citations from source documents when possible.",
+        'es': "Eres un asistente de un profesional médico. Responde a la pregunta basándote en el contexto proporcionado. Si no puedes encontrar la respuesta en el contexto, indícalo. Incluye citas de los documentos fuente cuando sea posible."
+    }
+    return prompts[lang]
+
 def main():
-    st.title("Rural Llama Health")
+    # Initialize session state for language selection
+    if 'language' not in st.session_state:
+        st.session_state.language = 'en'
+    
+    # Language selector in sidebar
+    lang = st.sidebar.selectbox(
+        TRANSLATIONS['en']['language_selector'],
+        options=['en', 'es'],
+        format_func=lambda x: 'English' if x == 'en' else 'Español',
+        key='language'
+    )
+    
+    # Get translations for current language
+    t = TRANSLATIONS[lang]
+    
+    st.title(t['app_title'])
     
     if 'initialized' not in st.session_state:
         try:
@@ -362,99 +443,81 @@ def main():
             st.session_state.initialized = True
             st.session_state.documents_processed = False
         except Exception as e:
-            st.error(f"Error initializing the system: {str(e)}")
-            st.error("Please check your secrets.toml configuration")
+            st.error(f"{t['error_init']} {str(e)}")
+            st.error(t['error_config'])
             return
     
-    tab1, tab2 = st.tabs(["Query Documents", "Download Documents"])
+    tab1, tab2 = st.tabs([t['query_tab'], t['download_tab']])
     
     with tab2:
         corpus_folder = "../api-llm/corpus"
-
-        files = os.listdir(corpus_folder)
-        files = [f for f in files if f.endswith(".pdf")]
+        files = [f for f in os.listdir(corpus_folder) if f.endswith(".pdf")]
         
         if files:
-            st.subheader("Available Documents")
+            st.subheader(t['available_docs'])
             for file_name in files:
                 col1, col2 = st.columns([4, 1])
                 with col1:
-                    st.write(f"📄 {file_name}")  # Display the file name
+                    st.write(f"📄 {file_name}")
                 with col2:
-                    file_path = os.path.join(corpus_folder, file_name) 
+                    file_path = os.path.join(corpus_folder, file_name)
                     try:
                         with open(file_path, "rb") as file:
                             file_data = file.read()
                         st.download_button(
-                            label="Download",
+                            label="Download" if lang == 'en' else "Descargar",
                             data=file_data,
                             file_name=file_name,
                             mime="application/pdf",
-                            key=f"download_{file_name}"  # Unique key for each button
+                            key=f"download_{file_name}"
                         )
                     except Exception as e:
                         st.error(f"Error reading {file_name}: {str(e)}")
     
     with tab1:
-        st.title("Ask Questions")
-        st.text("to query our curated knowdledge base.")
-        st.subheader("Text")
+        st.title(t['ask_questions'])
+        st.text(t['query_subtitle'])
+        st.subheader(t['audio_section'])
         
         documents = st.session_state.vector_store.get_all_documents()
         
         if not documents:
-            st.warning("No documents found. Please upload some documents first.")
+            st.warning(t['no_docs_warning'])
             return
         
         selected_docs = st.multiselect(
-            "Select documents to search (leave empty to search all)",
+            t['select_docs_prompt'],
             options=list(documents.keys()),
             default=None
         )
         
-        query = st.text_input("Enter your question:")
-
-        # Which Whisper model
+        query = st.text_input(t['enter_question'])
+        
+        # Audio recording and processing
         whisper_model_type = "Small"
-
-        def process_audio(filename, model_type):
-            model = whisper.load_model(model_type)
-            result = model.transcribe(filename)
-            return result["text"]
-
-        # Recording y transcription
-        st.subheader("Audio")
-        audio = audiorecorder("Grabar audio", "Detener")
+        audio = audiorecorder(t['record_audio'], t['stop_recording'])
+        
         if len(audio) > 0:
             try:
                 if isinstance(audio, AudioSegment):
-                    # Convert into bytes
-                    st.audio(audio.export().read())  
+                    st.audio(audio.export().read())
                     audio.export("audio.wav", format="wav")
-                    
-                    # Add to chat history
                     transcribed_text = process_audio("audio.wav", whisper_model_type.lower())
-                    print(transcribed_text)
                     query = transcribed_text
             except Exception as e:
-                st.error(f"Error al procesar el audio: {e}")
-                
-        # WAV file uploaded for transcription
-        uploaded_file = st.file_uploader("Upload a WAV file", type=["wav"])
-        try:
-            if uploaded_file is not None:
+                st.error(f"{t['error_process_audio']} {str(e)}")
+        
+        uploaded_file = st.file_uploader(t['upload_wav'], type=["wav"])
+        if uploaded_file is not None:
+            try:
                 with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_file:
                     temp_file.write(uploaded_file.getbuffer())
-                    temp_file_path = temp_file.name 
-
-                transcribed_text = process_audio(temp_file_path, whisper_model_type.lower())
-
-                query = transcribed_text
-        except Exception as e:
-            st.write(str(e))
+                    query = process_audio(temp_file.name, whisper_model_type.lower())
+            except Exception as e:
+                st.error(str(e))
         
         if query:
-            with st.spinner("Searching for relevant information..."):
+            with st.spinner(t['searching']):
                 results = st.session_state.vector_store.semantic_search(
                     query,
                     documents=selected_docs if selected_docs else None
@@ -463,7 +526,7 @@ def main():
                 if results:
                     context = "\n\n".join([match.metadata['text'] for match in results])
                     messages = [
-                        {"role": "system", "content": "Eres un asistente de un profesional médico. Responde a la pregunta basándote en el contexto proporcionado. Si no puedes encontrar la respuesta en el contexto, indícalo. Incluye citas de los documentos fuente cuando sea posible."},
+                        {"role": "system", "content": get_system_prompt(lang)},
                         {"role": "user", "content": f"Context:\n{context}\n\nQuestion: {query}"}
                     ]
                     
@@ -474,17 +537,22 @@ def main():
                             temperature=0
                         )
                         
-                        st.write("Answer:", response.choices[0].message.content)
+                        st.write(f"{t['answer_prefix']} {response.choices[0].message.content}")
                         
-                        st.subheader("Sources")
+                        st.subheader(t['sources_header'])
                         for i, match in enumerate(results, 1):
-                            with st.expander(f"Source {i}: {match.metadata['source']}"):
+                            with st.expander(f"{t['source_prefix']} {i}: {match.metadata['source']}"):
                                 st.write(match.metadata['text'])
-                                st.write(f"Relevance Score: {match.score:.4f}")
+                                st.write(f"{t['relevance_score']} {match.score:.4f}")
                     except Exception as e:
-                        st.error(f"Error generating response: {str(e)}")
+                        st.error(f"Error: {str(e)}")
                 else:
-                    st.warning("No relevant information found. Please try a different question.")
+                    st.warning(t['no_results'])
+
+def process_audio(filename, model_type):
+    model = whisper.load_model(model_type)
+    result = model.transcribe(filename)
+    return result["text"]
 
 if __name__ == "__main__":
     main()
