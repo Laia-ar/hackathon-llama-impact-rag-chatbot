@@ -18,7 +18,7 @@
 <code>index_name = "your_index_name"</code>
 
 ### 📦 3.Install Dependencies
-<code>cd app</code>
+<code>cd app</code> </br>
 <code>pip install -r requirements.txt</code>
 
 ### 🚀 4.Run the Application:
