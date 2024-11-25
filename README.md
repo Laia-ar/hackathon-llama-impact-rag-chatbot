@@ -22,7 +22,7 @@
 <code>pip install -r requirements.txt</code>
 
 ### 🚀 4.Run the Application:
-<code>streamlit run app.py</code>
+<code>streamlit run main.py</code>
 
 Ejemplos de prompts:
 
