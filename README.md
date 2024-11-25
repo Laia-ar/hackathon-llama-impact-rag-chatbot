@@ -9,13 +9,13 @@
 <code>cd hackathon-llama-impact-rag-chatbot</code>
 
 ### 🔑 2. Set Up API Keys: Create the .streamlit/secrets.toml in the root of the project and add your openai and pinecone API keys in the following format:
-<code>[openai]</code>
-<code>api_key = "your_openai_api_key"</code>
+<code>[openai]</code> </br>
+<code>api_key = "your_openai_api_key"</code> </br>
 <code>base_url = "base_url"</code>
 
 <code>[pinecone]</code>
-<code>api_key = "your_pinecone_api_key"</code>
-<code>index_name = "your_index_name"</code>
+<code>api_key = "your_pinecone_api_key"</code> </br>
+<code>index_name = "your_index_name"</code> </br>
 
 ### 📦 3.Install Dependencies
 <code>cd app</code>
