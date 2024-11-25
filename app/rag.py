@@ -12,6 +12,10 @@ from datetime import datetime
 import concurrent.futures
 import gc
 import tiktoken
+from audiorecorder import audiorecorder
+from pydub import AudioSegment
+import whisper
+import tempfile
 
 # Initialize OpenAI client with API key and base_url from secrets
 client = OpenAI(api_key=st.secrets["openai"]["api_key"], base_url=st.secrets["openai"]["base_url"])
@@ -471,6 +475,45 @@ def main():
         )
         
         query = st.text_input("Enter your question:")
+
+        # Which Whisper model
+        whisper_model_type = st.radio("Please choose your model type", ('Tiny', 'Base', 'Small', 'Medium', 'Large'))
+
+        def process_audio(filename, model_type):
+            model = whisper.load_model(model_type)
+            result = model.transcribe(filename)
+            return result["text"]
+
+        # Recording y transcription
+        st.subheader("Audio")
+        audio = audiorecorder("Grabar audio", "Detener")
+        if len(audio) > 0:
+            try:
+                if isinstance(audio, AudioSegment):
+                    # Convert into bytes
+                    st.audio(audio.export().read())  
+                    audio.export("audio.wav", format="wav")
+                    
+                    # Add to chat history
+                    transcribed_text = process_audio("audio.wav", whisper_model_type.lower())
+                    print(transcribed_text)
+                    query = transcribed_text
+            except Exception as e:
+                st.error(f"Error al procesar el audio: {e}")
+                
+        # WAV file uploaded for transcription
+        uploaded_file = st.file_uploader("Upload a WAV file", type=["wav"])
+        try:
+            if uploaded_file is not None:
+                with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_file:
+                    temp_file.write(uploaded_file.getbuffer())
+                    temp_file_path = temp_file.name 
+
+                transcribed_text = process_audio(temp_file_path, whisper_model_type.lower())
+
+                query = transcribed_text
+        except Exception as e:
+            st.write(str(e))
         
         if query:
             with st.spinner("Searching for relevant information..."):
