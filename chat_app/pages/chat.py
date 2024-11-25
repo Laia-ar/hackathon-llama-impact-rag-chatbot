@@ -99,6 +99,7 @@ with col3:
         if st.button("↩️"):
             ChatSessionManager.save_current_session()
             st.session_state.current_patient = None
+            st.rerun()
             
 
 # Área de mensajes
