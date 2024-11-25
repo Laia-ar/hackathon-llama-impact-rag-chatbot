@@ -15,7 +15,7 @@
 
 <code>[pinecone]</code>
 <code>api_key = "your_pinecone_api_key"</code> </br>
-<code>index_name = "your_index_name"</code> </br>
+<code>index_name = "your_index_name"</code>
 
 ### 📦 3.Install Dependencies
 <code>cd app</code>
